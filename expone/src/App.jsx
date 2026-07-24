@@ -1,39 +1,28 @@
-import { useState } from 'react'
-import './App.css'
-import { useEffect } from 'react'
+import { useMemo, useState } from 'react'
+import Name from './Name'
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
+  const [name, setName] = useState('')
 
-  useEffect(() => {
-    console.log(count);
-  }, [count]);
-
-
-  const [name, setName] = useState("");
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.json())
-      .then(json => console.log(json));
-  }, []);
-
+  const memoizedNameValue = useMemo(() => {
+    console.log('nameValue recalculated!');
+    return name ? name.toUpperCase() : '';
+  }, [name])
 
   return (
-    <>
-      <div> <h1>Hello click + for count +1</h1></div>
-      <br />
-      <br />
-      <div> {count} </div>
-      <div>
-        <button onClick={() => setCount(count + 1)}> + </button>
-        <button onClick={() => setCount(Math.max(0, count - 1))}> - </button>
-        <input type="text" onChange={(e) => { setName(e.target.value) }} />
-      </div>
-    </>
+    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter your name"
+        style={{ marginLeft: '10px' }}
+      />
+      <Name nameValue={memoizedNameValue} />
+    </div>
   )
 }
 

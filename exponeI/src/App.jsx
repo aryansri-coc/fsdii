@@ -117,6 +117,14 @@ function App() {
     if (!isComposerValid) return
     setIsPublishing(true)
     setTimeout(() => {
+
+      const postData = {
+        text: text,
+        platforms: selectedPlatforms,
+        publishedAt: new Date().toISOString()
+      }
+      localStorage.setItem('last_published_post', JSON.stringify(postData))
+
       setIsPublishing(false)
       setText('')
       alert('Post successfully simulated publishing across selected platforms!')
@@ -141,7 +149,7 @@ function App() {
           <h2 className="text-lg font-medium mb-4 border-b border-gray-200 dark:border-gray-800 pb-2 flex items-center gap-2 text-gray-900 dark:text-gray-100">
             Compose Your Post
           </h2>
-          
+
           {/* Platform Selection */}
           <div className="mb-5">
             <div className="flex justify-between items-center mb-2">
@@ -170,11 +178,10 @@ function App() {
                   <button
                     key={platform.id}
                     type="button"
-                    className={`inline-flex items-center gap-2 px-3.5 py-2 border rounded-full text-[13px] font-medium cursor-pointer transition-all duration-200 ${
-                      isSelected
-                        ? activeColorClasses[platform.id]
-                        : 'bg-white dark:bg-[#16171d] border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 border rounded-full text-[13px] font-medium cursor-pointer transition-all duration-200 ${isSelected
+                      ? activeColorClasses[platform.id]
+                      : 'bg-white dark:bg-[#16171d] border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      }`}
                     onClick={() => handleTogglePlatform(platform.id)}
                   >
                     <span className="text-base">{platform.icon}</span>
