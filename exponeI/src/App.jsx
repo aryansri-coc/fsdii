@@ -34,6 +34,17 @@ const PLATFORMS = {
       { id: 'char', text: 'Max 200 characters' }
     ]
   },
+  reddit: {
+    id: 'reddit',
+    name: 'reddit',
+    color: '#39e88dff',
+    icon: '👍',
+    colorClass: 'brand-reddit',
+    maxChars: 300,
+    rules: [
+      { id: 'char', text: 'Max 300 characters' }
+    ]
+  },
   facebook: {
     id: 'facebook',
     name: 'Facebook',
@@ -51,7 +62,8 @@ const activeColorClasses = {
   twitter: 'bg-brand-twitter border-brand-twitter text-white shadow-sm',
   instagram: 'bg-brand-instagram border-brand-instagram text-white shadow-sm',
   linkedin: 'bg-brand-linkedin border-brand-linkedin text-white shadow-sm',
-  facebook: 'bg-brand-facebook border-brand-facebook text-white shadow-sm'
+  facebook: 'bg-brand-facebook border-brand-facebook text-white shadow-sm',
+  reddit: 'bg-brand-reddit border-brand-reddit text-white shadow-sm'
 }
 
 function App() {
@@ -59,9 +71,9 @@ function App() {
   const [selectedPlatforms, setSelectedPlatforms] = useState(['twitter'])
   const [isPublishing, setIsPublishing] = useState(false)
   const [validationStates, setValidationStates] = useState({})
-  const [singleSelect, setSingleSelect] = useState(true) // Default to single selection mode
+  const [singleSelect, setSingleSelect] = useState(true)
 
-  // Determine the strictest active character limit among selected platforms
+
   const activeLimit = Math.min(
     ...selectedPlatforms.map(pId => PLATFORMS[pId].maxChars)
   )
