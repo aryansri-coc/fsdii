@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight, CalendarRange } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CalendarDays, Plus } from 'lucide-react';
 import { getCalendarHeaderLabel } from '../utils/dateHelpers';
 
 export default function CalendarHeader({
@@ -7,6 +7,7 @@ export default function CalendarHeader({
   viewMode,
   onNavigate,
   onViewChange,
+  onNewPost,
 }) {
   const handlePrev = () => {
     const date = new Date(currentDate);
@@ -37,61 +38,72 @@ export default function CalendarHeader({
   };
 
   return (
-    <div className="calendar-header-wrapper">
-      {/* Title / Info */}
+    <header className="calendar-header-wrapper">
       <div className="brand-section">
         <div className="brand-icon-box">
-          <CalendarRange style={{ width: '24px', height: '24px' }} />
+          <CalendarDays className="brand-icon" />
         </div>
-        <div>
-          <h1 className="brand-title">Social Scheduler</h1>
-          <p className="brand-subtitle">Map & organize your posts visually</p>
+        <div className="brand-text">
+          <h1 className="brand-title">Post Calendar Scheduler</h1>
+          <p className="brand-subtitle">Schedule & manage posts across temporal layouts</p>
         </div>
       </div>
 
-      {/* Navigation Controls */}
       <div className="nav-controls">
-        <button
-          onClick={handlePrev}
-          className="btn-icon"
-          title="Previous"
-        >
-          <ChevronLeft style={{ width: '20px', height: '20px' }} />
-        </button>
+        <div className="nav-btn-group">
+          <button
+            onClick={handlePrev}
+            className="btn-icon"
+            aria-label="Previous period"
+            title="Previous"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <button
+            onClick={handleToday}
+            className="btn-today"
+          >
+            Today
+          </button>
+          <button
+            onClick={handleNext}
+            className="btn-icon"
+            aria-label="Next period"
+            title="Next"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
 
-        <button
-          onClick={handleToday}
-          className="btn-today"
-        >
-          Today
-        </button>
-
-        <button
-          onClick={handleNext}
-          className="btn-icon"
-          title="Next"
-        >
-          <ChevronRight style={{ width: '20px', height: '20px' }} />
-        </button>
-
-        {/* Date Display */}
         <h2 className="current-date-label">
           {getCalendarHeaderLabel(currentDate, viewMode)}
         </h2>
       </div>
 
-      {/* View Toggle */}
-      <div className="view-toggle-bar">
-        {['month', 'week', 'day'].map((mode) => (
+      <div className="header-actions">
+        <div className="view-toggle-bar">
+          {['month', 'week', 'day'].map((mode) => (
+            <button
+              key={mode}
+              onClick={() => onViewChange(mode)}
+              className={`btn-toggle-view ${viewMode === mode ? 'active' : ''}`}
+            >
+              {mode}
+            </button>
+          ))}
+        </div>
+
+        {onNewPost && (
           <button
-            key={mode}
-            onClick={() => onViewChange(mode)}
-            className={`btn-toggle-view ${viewMode === mode ? 'active' : ''}`}
+            onClick={onNewPost}
+            className="btn-primary-action"
+            title="Create new post"
           >
-            {mode}
+            <Plus size={15} />
+            <span>New Post</span>
           </button>
-        ))}
+        )}
       </div>
-    </div>
+    </header>
   );
 }

@@ -7,7 +7,6 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
   const [platform, setPlatform] = useState('twitter');
   const [postDate, setPostDate] = useState('');
   const [postTime, setPostTime] = useState('09:00');
-  const [status, setStatus] = useState('scheduled');
 
   useEffect(() => {
     if (post) {
@@ -16,14 +15,12 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
       setPlatform(post.platform);
       setPostDate(post.date);
       setPostTime(post.time);
-      setStatus(post.status);
     } else {
       setTitle('');
       setContent('');
       setPlatform('twitter');
       setPostDate(date || new Date().toISOString().split('T')[0]);
       setPostTime('09:00');
-      setStatus('scheduled');
     }
   }, [post, date, isOpen]);
 
@@ -40,18 +37,20 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
       platform,
       date: postDate,
       time: postTime,
-      status,
     });
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
         <div className="modal-header">
           <h3 className="modal-title">
-            {post ? <Edit2 style={{ width: '20px', height: '20px', color: 'var(--color-primary)' }} /> : <Calendar style={{ width: '20px', height: '20px', color: 'var(--color-primary)' }} />}
-            {post ? 'Edit Scheduled Post' : 'Schedule New Post'}
+            {post ? (
+              <Edit2 style={{ width: '20px', height: '20px', color: 'var(--color-primary)' }} />
+            ) : (
+              <Calendar style={{ width: '20px', height: '20px', color: 'var(--color-primary)' }} />
+            )}
+            {post ? 'Edit Post' : 'Create New Post'}
           </h3>
           <button
             onClick={onClose}
@@ -61,60 +60,22 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="modal-body-form">
           <div className="form-group">
-            <label className="form-label">
-              Post Title
-            </label>
+            <label className="form-label">Post Title</label>
             <input
               type="text"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Product Launch Teaser 🚀"
+              placeholder="e.g. Product Changelog & Feature Release"
               className="form-input"
             />
           </div>
 
           <div className="form-row-2">
             <div className="form-group">
-              <label className="form-label">
-                Platform
-              </label>
-              <select
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value)}
-                className="form-select"
-              >
-                <option value="twitter">X / Twitter</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="instagram">Instagram</option>
-                <option value="facebook">Facebook</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">
-                Status
-              </label>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                className="form-select"
-              >
-                <option value="scheduled">Scheduled</option>
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="form-row-2">
-            <div className="form-group">
-              <label className="form-label">
-                Date
-              </label>
+              <label className="form-label">Date</label>
               <input
                 type="date"
                 required
@@ -125,9 +86,7 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
             </div>
 
             <div className="form-group">
-              <label className="form-label">
-                Time
-              </label>
+              <label className="form-label">Time</label>
               <input
                 type="time"
                 required
@@ -139,9 +98,21 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
           </div>
 
           <div className="form-group">
-            <label className="form-label">
-              Post Content
-            </label>
+            <label className="form-label">Platform</label>
+            <select
+              value={platform}
+              onChange={(e) => setPlatform(e.target.value)}
+              className="form-select"
+            >
+              <option value="twitter">X / Twitter</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="instagram">Instagram</option>
+              <option value="facebook">Facebook</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Post Content</label>
             <textarea
               required
               rows={4}
@@ -152,7 +123,6 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
             />
           </div>
 
-          {/* Footer Actions */}
           <div className="modal-footer">
             {post ? (
               <button
@@ -183,7 +153,7 @@ export default function PostModal({ post, date, isOpen, onClose, onSave, onDelet
                 className="btn-save"
               >
                 <Send style={{ width: '16px', height: '16px' }} />
-                {post ? 'Update' : 'Schedule'}
+                {post ? 'Update' : 'Save Post'}
               </button>
             </div>
           </div>

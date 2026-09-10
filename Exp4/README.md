@@ -1,16 +1,52 @@
-# React + Vite
+# Experiment 4: Interactive Calendar Interface for Scheduling and Managing Posts
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Aim
+To design and implement an interactive calendar interface for scheduling and managing posts.
 
-Currently, two official plugins are available:
+## Objectives
+- Understand time-based data visualization in UI systems
+- Implement calendar-based scheduling interfaces
+- Map structured data to temporal layouts (day, week, and month views)
+- Enable user interactions such as drag-and-drop rescheduling and modal-based editing
+- Synchronize calendar interactions with application state using Redux Toolkit
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Course Outcomes & Taxonomy
+- **CO Mapped:** CO3
+- **Bloom's Taxonomy:** BT3 (Apply)
 
-## React Compiler
+## Tech Stack & Requirements
+- **Framework:** React.js (Vite)
+- **State Management:** Redux Toolkit (`@reduxjs/toolkit`, `react-redux`)
+- **Icons:** `lucide-react`
+- **Testing:** Vitest & React Testing Library
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Implementation & Procedure
+1. **Calendar Layouts (Temporal Visualization):**
+   - **Month View:** 7-column grid representing 42 calendar days (6 weeks) including previous and next month buffer days.
+   - **Week View:** 7-column focused view of the active week.
+   - **Day View:** Linear timeline view detailing posts scheduled for the selected date.
+2. **Temporal Data Modeling:**
+   - Posts are modeled with `id`, `title`, `content`, `date` (YYYY-MM-DD), `time` (HH:MM), and `platform`.
+3. **Dynamic Event Mapping:**
+   - Post data is grouped by date and rendered into corresponding calendar date cells and timeline slots.
+4. **Interactive Scheduling:**
+   - **Click to Add/Edit:** Clicking an empty cell opens the creation modal for that date; clicking a post opens the edit/delete modal.
+   - **Drag-and-Drop:** Native HTML5 drag-and-drop allows dragging a post card and dropping it into any date cell to update its schedule.
+5. **Redux State Synchronization:**
+   - `calendarSlice`: Manages `currentDate` and `viewMode` ('month' | 'week' | 'day').
+   - `postsSlice`: Manages posts state with `addPost`, `updatePost`, `deletePost`, and `movePost` reducers.
 
-## Expanding the Oxlint configuration
+## Running the Project
+```bash
+# Install dependencies
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+# Start development server
+npm run dev
+
+# Run automated tests
+npm test
+
+# Build for production
+npm run build
+```
