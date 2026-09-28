@@ -33,11 +33,3 @@ LABMST/
         └── jwt.js              # Token generation and decoding logic
 ```
 
-## How to Run
-```bash
-# 1. Navigate to the LABMST folder
-cd LABMST
-
-# 2. Run the development server
-npm run dev
-```
