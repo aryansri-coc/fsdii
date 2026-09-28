@@ -2,7 +2,8 @@
 
 A simple, focused React authentication application demonstrating simulated JWT generation, token storage in `localStorage`, and protected dashboard routing based on user roles.
 
-## Requirements Implemented
+## Name: Aryan Srivastava , 24BAI70116 , 24AML-4'B'
+Requirements Implemented
 - [x] **Username and Password fields** with form validation.
 - [x] **Login Button** to submit credentials.
 - [x] **Simulated JWT Creation** containing `userId`, `username`, and `role` with standard Base64 `header.payload.signature` format.
